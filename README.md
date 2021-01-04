@@ -8,6 +8,12 @@ Example:
     git setup git@github.com:python/mypy.git python==3.7 black pylint
 
 # Installation
+
+Dependencies:
+1. [jq](https://github.com/stedolan/jq)
+1. [conda](https://github.com/conda/conda)
+1. [tmuxinator](https://github.com/tmuxinator/tmuxinator) (optional)
+
 ```bash
 chmod +x install.sh
 ./install.sh
