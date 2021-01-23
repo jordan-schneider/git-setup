@@ -37,9 +37,11 @@ fi
 echo "Installing pip packages"
 python -m pip install --upgrade pip
 
-for REQ in *requirements*.txt; do
-    python -m pip install -r "$REQ"
-done
+if compgen -G "*requirements*.txt" > /dev/null; then
+    for REQ in *requirements*.txt; do
+        python -m pip install -r "$REQ"
+    done
+fi
 
 if [ -f setup.py ]; then
     # This will often fail, because you need to install requirements not covered by environment.yml
