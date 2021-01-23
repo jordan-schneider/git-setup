@@ -10,4 +10,4 @@ for INSTALL_DIR in "${PATHS[@]}"; do
   fi
 done
 
-ln -s $(pwd)/setup.sh $INSTALL_DIR/git-setup
+ln -s $(pwd)/git-setup.sh $INSTALL_DIR/git-setup

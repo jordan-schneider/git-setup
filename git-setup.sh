@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(dirname "$(realpath -s "$0")")
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 git clone $1
 BASEDIR="$(basename "$1" .git)"
