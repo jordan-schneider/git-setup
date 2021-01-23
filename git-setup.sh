@@ -2,12 +2,14 @@
 
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
+echo "Cloning git repo"
 git clone $1
 BASEDIR="$(basename "$1" .git)"
 cd $BASEDIR
 
 DIR=$(pwd)
 
+echo "Setting up conda env"
 if [ -f environment.yml ]; then
     ENV=$(conda env create -f environment.yml --json -q | jq -r .prefix | xargs basename)
 else
@@ -32,6 +34,7 @@ if ! [[ $(which python) == *"$ENV"* ]]; then
     conda install python -y
 fi
 
+echo "Installing pip packages"
 python -m pip install --upgrade pip
 
 for REQ in *requirements*.txt; do
@@ -45,13 +48,17 @@ if [ -f setup.py ]; then
     python -m pip install -e . &> /dev/null
 fi
 
+echo "Setting up tmuxinator"
 if [ -x "$(command -v tmuxinator)" ]; then
+    echo "Creating tmuxinator environment"
     CONFIG_PATH=$DIR/.tmuxinator.yml
     cat $SCRIPT_DIR/template.yml \
     | sed -e 's:{ENV\}:'$ENV':'  \
           -e 's:{DIR\}:'$DIR':' \
           -e 's:{CONFIGPATH\}:'$CONFIG_PATH':' \
     &> .tmuxinator.yml
+    tmuxinator start $ENV
+else
+    echo "tmuxinator not found"
 fi
 
-tmuxinator start $ENV
