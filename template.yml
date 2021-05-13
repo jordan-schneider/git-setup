@@ -45,7 +45,6 @@ pre_window: conda activate {ENV}
 # attach: false
 
 windows:
-  - editor:
-  - run:
   - monitor: htop
-
+  - gpu: nvidia-smi
+  - run:
